@@ -1,5 +1,5 @@
 # lean_sell_product
-
+# 运用 scss+vue+better-scroll+vue-resource+vue-router
 ## Project setup
 ```
 npm install

@@ -1,0 +1,50 @@
+html,
+body {
+  line-height: 1;
+  font-weight: 200;
+  font-family: "PingFang SC", "Microsoft YaHei", "STHeitiSC-Light", "HElvetica-Light", "Helvetica Neue", Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.clearfix {
+
+  &:before,
+  &:after {
+    display: table;
+    line-height: 0;
+    content: "";
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+@media(-webkit-min-device-pixel-ratio:1.5),
+(min-device-pixel-ratio:1.5) {
+  .border-1px {
+    &::after {
+      -webkit-transform: scaleY(.7);
+      transform: scaleY(.7);
+    }
+  }
+}
+
+@media(-webkit-min-device-pixel-ratio:2),
+(min-device-pixel-ratio:2) {
+  .border-1px {
+    &::after {
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+    }
+  }
+}
+
+@media(-webkit-min-device-pixel-ratio:3),
+(min-device-pixel-ratio:3) {
+  .border-1px {
+    &::after {
+      -webkit-transform: scaleY(.33);
+      transform: scaleY(.33);
+    }
+  }
+}
