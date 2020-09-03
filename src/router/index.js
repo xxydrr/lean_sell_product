@@ -1,10 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import HelloWorld from '@/components/HelloWorld'
-import goods from 'components/goods/goods'
-import ratings from 'components/ratings/ratings'
-// import food from '../components/food/food'
-import seller from 'components/seller/seller'
 
 Vue.use(Router)
 
@@ -15,15 +10,17 @@ export default new Router({
   }, {
     path: '/goods',
     name: 'goods',
-    component: goods
+    component: () => import('views/goods/goods.vue')
   }, {
     path: '/ratings',
     name: 'ratings',
-    component: ratings
+    component: () => import('views/ratings/ratings.vue')
+
   }, {
     path: '/seller',
     name: 'seller',
-    component: seller
+    component: () => import('views/seller/seller.vue')
+
   }],
   linkActiveClass: 'active'
 })

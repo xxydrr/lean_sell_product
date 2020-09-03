@@ -15,6 +15,7 @@ module.exports = {
     config.resolve.alias
       .set('components', resolve('src/components'))
       .set('common', resolve('src/common'))
+      .set('views', resolve('src/views'))
       .set('api', resolve('src/api'))
 
     config.plugin('context')
