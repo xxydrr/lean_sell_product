@@ -19,34 +19,27 @@
 </template>
 
 <script>
+import { getSeller } from 'api'
+// import { urlParse } from 'common/js/util.js'  // 方法一
+import qs from 'query-string' // 方法2 使用第三方插件的方式
 import header from 'components/header/header.vue'
-import { urlParse } from 'common/js/util.js'
-
-const ERR_OK = 0
 export default {
   name: 'App',
   data() {
     return {
       seller: {
-        id: (() => {
-          const queryParam = urlParse()
-          return queryParam.id
-        })()
+        // id: (() => {
+        //   const queryParam = urlParse()
+        //   return queryParam.id
+        // })()
+        id: qs.parse(location.search).id
       }
     }
   },
   created() {
-    this.$http
-      .get('api/seller?id=' + this.seller.id)
-      .then(result => {
-        result = result.body
-        if (result.errno === ERR_OK) {
-          this.seller = Object.assign({}, this.seller, result.data)
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    getSeller({ id: this.seller.id }).then((seller) => {
+      this.seller = Object.assign({}, this.seller, seller)
+    })
   },
   components: {
     'v-header': header

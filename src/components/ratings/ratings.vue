@@ -91,6 +91,7 @@
 </template>
 
 <script>
+import { getRatings } from 'api'
 import BScroll from 'better-scroll'
 import star from 'components/star/star'
 import split from 'components/split/split'
@@ -98,7 +99,6 @@ import ratingselect from 'components/ratingselect/ratingselect'
 import { formatDate } from 'common/js/date'
 
 const ALL = 2
-const ERR_OK = 0
 export default {
   name: '',
   data() {
@@ -119,16 +119,13 @@ export default {
     split
   },
   created() {
-    this.$http.get('/api/ratings').then(response => {
-      const result = response.body
-      if (result.errno === ERR_OK) {
-        this.ratings = result.data
-        this.$nextTick(() => {
-          this.scroll = new BScroll(this.$refs.ratings, {
-            click: true
-          })
+    getRatings({ id: this.seller.id }).then(ratings => {
+      this.ratings = ratings
+      this.$nextTick(() => {
+        this.scroll = new BScroll(this.$refs.ratings, {
+          click: true
         })
-      }
+      })
     })
   },
   filters: {

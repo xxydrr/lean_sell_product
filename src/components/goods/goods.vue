@@ -91,18 +91,19 @@
 </template>
 
 <script>
+import { getGoods } from 'api'
 import BScroll from 'better-scroll'
 import shopcart from '../shopcart/shopcart'
 import cartcontrol from '../cartcontrol/cartcontrol'
 import food from '../food/food'
 
-const ERR_OK = 0
 export default {
   name: '',
   data() {
     return {
       goods: [],
       listHeight: [],
+      totalHeight: 0,
       scrollY: 0,
       selectedFood: {}
     }
@@ -142,21 +143,13 @@ export default {
     food
   },
   created() {
-    this.$http
-      .get('api/goods')
-      .then(result => {
-        result = result.body
-        if (result.errno === ERR_OK) {
-          this.goods = result.data
-          this.$nextTick(() => {
-            this._initScroll()
-            this._calculateHeight()
-          })
-        }
+    getGoods({ id: this.seller.id }).then(goods => {
+      this.goods = goods
+      this.$nextTick(() => {
+        this._initScroll()
+        this._calculateHeight()
       })
-      .catch(err => {
-        console.log(err)
-      })
+    })
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
   },
   methods: {
@@ -173,8 +166,8 @@ export default {
       })
     },
     _initLeftScroll(index) {
-      let menu = this.$refs.menuList
-      let el = menu[index]
+      const menu = this.$refs.menuList
+      const el = menu[index]
       this.menuScroll.scrollToElement(el, 300)
     },
     _calculateHeight() {
@@ -188,6 +181,7 @@ export default {
         height += item.clientHeight
         this.listHeight.push(height)
       }
+      this.totalHeight = height
     },
     selectMenu(index, event) {
       const foodList = this.$refs.foodsWrapper.getElementsByClassName(
